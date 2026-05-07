@@ -145,26 +145,42 @@ def resolve_path(start: str, renames: dict, live: set, deletes: dict):
     return ("unknown", None, hops)
 
 
-def parent_fallback(path: str, live: set):
-    """For a deleted file, find a successor by name-stem in the live tree.
+_DECL_RE = re.compile(
+    r"^\s*(?:protected\s+|noncomputable\s+|private\s+)?"
+    r"(theorem|def|lemma|instance|class|structure|inductive|abbrev)\b",
+    re.MULTILINE,
+)
 
-    Handles only the unambiguous X.lean → X/Basic.lean (or X/Defs.lean)
-    split pattern. Returning a successor in any other case risks pointing
-    at an alphabetically-first but topically-wrong sibling (e.g. picking
-    `Cat.lean` over `Pseudofunctor.lean`); when the heuristic can't
-    decide, leave the entry unmapped so the renderer falls back to
-    upstream's self-canonical.
+def _decl_count(cache, lean_path):
+    try:
+        text = (cache / lean_path).read_text(errors="replace")
+    except OSError:
+        return 0
+    return sum(1 for _ in _DECL_RE.finditer(text))
+
+
+def parent_fallback(path: str, live: set, cache=None):
+    """For a deleted X.lean, prefer the larger of X/Defs.lean and X/Basic.lean.
+
+    Handles only the unambiguous X.lean → X/{Basic,Defs}.lean split
+    pattern. When both siblings exist, pick the one with more
+    declarations: for the common Defs-plus-Basic split, the bulk of the
+    original file's content typically lives in Defs.lean (the
+    upstream convention is "Defs holds definitions and core lemmas;
+    Basic adds results that need more imports").
 
     Returns (live_lean_path, 1) on a match, or (None, 0).
     """
     if not path.endswith(".lean"):
         return (None, 0)
     stem = path[:-5]
-    for tail in ("Basic.lean", "Defs.lean"):
-        candidate = f"{stem}/{tail}"
-        if candidate in live:
-            return (candidate, 1)
-    return (None, 0)
+    candidates = [f"{stem}/{t}" for t in ("Basic.lean", "Defs.lean")
+                  if f"{stem}/{t}" in live]
+    if not candidates:
+        return (None, 0)
+    if len(candidates) == 1 or cache is None:
+        return (candidates[0], 1)
+    return (max(candidates, key=lambda p: _decl_count(cache, p)), 1)
 
 
 # Basenames too generic to risk a same-basename rename match against
@@ -177,28 +193,50 @@ _GENERIC_BASENAMES = frozenset({
 })
 
 
-# Known directory-level renames in mathlib4 history that git's rename
-# detection can't follow because the contained files were also rewritten.
-# Each entry encodes the old → new directory segment; the fallback below
-# tries `path.replace("/<old>/", "/<new>/")` for each. Verified empirically
-# (old dir is empty in master HEAD, new dir is populated).
-_DIRECTORY_ALIASES = {
-    "GroupCat":            "Grp",            # Algebra/Category — 27 files in Grp
-    "AlgebraCat":          "AlgCat",         # Algebra/Category — 4 files in AlgCat
-    "SemiNormedGroupCat":  "SemiNormedGrp",  # Analysis/Normed/Group — 2 files
-    "SlimCheck":           "Plausible",      # Testing — package renamed
+# Known mathlib4 renames git's similarity-based detection can't follow
+# (because the contained files were also rewritten when moved). Verified
+# empirically against master HEAD — old paths gone, new paths present.
+#
+# _DIR_ALIASES: simple `/old/` → `/new/` segment swaps within the path.
+# _PATH_PREFIX_ALIASES: rewrite a leading directory tree.
+# _PATH_ALIASES: literal full-path rewrites for one-off renames.
+_DIR_ALIASES = {
+    "GroupCat":            "Grp",            # Algebra/Category
+    "AlgebraCat":          "AlgCat",         # Algebra/Category
+    "SemiNormedGroupCat":  "SemiNormedGrp",  # Analysis/Normed/Group
+    "SlimCheck":           "Plausible",      # Testing — package rename
+}
+
+_PATH_PREFIX_ALIASES = {
+    "Mathlib/Data/IsROrC/":            "Mathlib/Analysis/RCLike/",
+    "Mathlib/GroupTheory/Subgroup/":   "Mathlib/Algebra/Group/Subgroup/",
+}
+
+_PATH_ALIASES = {
+    "Mathlib/Topology/LocalHomeomorph.lean":
+        "Mathlib/Topology/OpenPartialHomeomorph/Basic.lean",
+    "Mathlib/Analysis/Asymptotics/Asymptotics.lean":
+        "Mathlib/Analysis/Asymptotics/Defs.lean",
+    "Mathlib/FieldTheory/Adjoin.lean":
+        "Mathlib/FieldTheory/IntermediateField/Adjoin/Basic.lean",
 }
 
 
 def alias_fallback(path: str, live: set):
-    """Try the deleted path with each known mathlib4 directory rename
-    substituted in. Returns the first live match or (None, 0).
+    """Try rewriting `path` under each known mathlib4 rename. Returns the
+    first rewrite that lands on a live file, or (None, 0).
     """
     if not path.endswith(".lean"):
         return (None, 0)
-    for old, new in _DIRECTORY_ALIASES.items():
-        sep_old = f"/{old}/"
-        sep_new = f"/{new}/"
+    if path in _PATH_ALIASES and _PATH_ALIASES[path] in live:
+        return (_PATH_ALIASES[path], 1)
+    for old, new in _PATH_PREFIX_ALIASES.items():
+        if path.startswith(old):
+            candidate = new + path[len(old):]
+            if candidate in live:
+                return (candidate, 1)
+    for old, new in _DIR_ALIASES.items():
+        sep_old, sep_new = f"/{old}/", f"/{new}/"
         if sep_old in path:
             candidate = path.replace(sep_old, sep_new, 1)
             if candidate in live:
@@ -348,7 +386,7 @@ def main():
         status, current, _ = resolve_path(port_path, renames, live, deletes)
 
         if status == "deleted" and not args.no_parent_fallback:
-            parent, _ = parent_fallback(port_path, live)
+            parent, _ = parent_fallback(port_path, live, cache)
             if parent:
                 status = "split"
                 current = parent
