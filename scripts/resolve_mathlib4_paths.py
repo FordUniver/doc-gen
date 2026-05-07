@@ -167,6 +167,47 @@ def parent_fallback(path: str, live: set):
     return (None, 0)
 
 
+# Basenames too generic to risk a same-basename rename match against
+# (mathlib4 has 733 `Basic.lean`, 215 `Defs.lean` etc., so coincidental
+# hits would dominate). The split fallback above handles these cases
+# locally where it's safe.
+_GENERIC_BASENAMES = frozenset({
+    "Basic.lean", "Defs.lean", "Lemmas.lean", "Init.lean",
+    "Util.lean", "Misc.lean", "Tactic.lean",
+})
+
+
+def basename_fallback(path: str, live: set):
+    """For a deleted X.lean, find a live `*/X.lean` strictly *below* its
+    original directory, with the same basename.
+
+    Catches the case where mathlib4 pushed a file deeper into the same
+    namespace (e.g. Mathlib/Algebra/GeomSum.lean →
+    Mathlib/Algebra/Ring/GeomSum.lean) but git rename detection at -M75%
+    missed it. Restricts to *subdirectory* matches (candidate's full
+    directory chain must extend the deleted file's directory chain) so
+    we don't conflate sibling renames like Group↔Ring or RBTree↔List
+    that share the basename but have different content.
+
+    Returns (live_lean_path, 1) on a unique match, or (None, 0).
+    """
+    if not path.endswith(".lean"):
+        return (None, 0)
+    parts = path.split("/")
+    basename = parts[-1]
+    if basename in _GENERIC_BASENAMES:
+        return (None, 0)
+    deleted_dir = parts[:-1]
+    prefix = "/".join(deleted_dir) + "/"
+    candidates = [p for p in live
+                  if p.endswith("/" + basename)
+                  and p != path
+                  and p.startswith(prefix)]
+    if len(candidates) == 1:
+        return (candidates[0], 1)
+    return (None, 0)
+
+
 _SHIM_RE = re.compile(r"^\s*deprecated_module\b", re.MULTILINE)
 
 def is_deprecated_shim(cache: Path, lean_path: str) -> bool:
@@ -261,7 +302,7 @@ def main():
         http_head = make_url_checker(args.concurrency)
 
     resolved = {}            # module → mathlib4 docs path (no extension)
-    counts = {"verified": 0, "renamed": 0, "split": 0, "shim": 0,
+    counts = {"verified": 0, "renamed": 0, "split": 0, "moved": 0, "shim": 0,
               "deleted": 0, "unknown": 0, "unverified_404": 0,
               "not_ported": 0}
 
@@ -282,16 +323,22 @@ def main():
             if parent:
                 status = "split"
                 current = parent
+            else:
+                moved, _ = basename_fallback(port_path, live)
+                if moved:
+                    status = "moved"
+                    current = moved
 
         # Drop entries whose mathlib4 target is a `deprecated_module`
         # re-export shim — the file exists (HEAD probes 200) but the
         # docs page renders empty.
-        if current and status in ("verified", "renamed", "split"):
+        good_statuses = ("verified", "renamed", "split", "moved")
+        if current and status in good_statuses:
             if is_deprecated_shim(cache, current):
                 status = "shim"
                 current = None
 
-        if http_head and current and status in ("verified", "renamed", "split"):
+        if http_head and current and status in good_statuses:
             if not http_head(current[:-5] + ".html"):
                 status = "unverified_404"
                 current = None
