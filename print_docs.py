@@ -47,6 +47,8 @@ parser.add_argument('-w', help = 'Specify site root URL')
 parser.add_argument('-l', help = 'Symlink CSS and JS instead of copying', action = "store_true")
 parser.add_argument('-r', help = 'relative path to mathlib root directory')
 parser.add_argument('-t', help = 'relative path to html output directory')
+parser.add_argument('-j', '--jobs', type = int, default = 1,
+                    help = 'parallel workers for redirect-writing (default: 1, serial)')
 
 
 # extra doc files to include in generation
@@ -702,12 +704,33 @@ function redirectTo(tgt) {
 }
 """)
 
-def write_redirects(loc_map, file_map):
-  for decl_name in loc_map:
-    if (decl_name == 'con' or decl_name.startswith('con.')) and sys.platform == 'win32':
-      continue  # can't write these files on windows
-    write_docs_redirect(decl_name, loc_map[decl_name], file_map)
-    write_src_redirect(decl_name, loc_map[decl_name], file_map)
+_redirect_file_map = None
+
+def _redirect_init(file_map):
+  # Workers inherit module globals (env, html_root, site_root, ...) via fork;
+  # file_map is large, so we share it once via initializer rather than pickle
+  # it per task.
+  global _redirect_file_map
+  _redirect_file_map = file_map
+
+def _redirect_one(item):
+  decl_name, decl_loc = item
+  write_docs_redirect(decl_name, decl_loc, _redirect_file_map)
+  write_src_redirect(decl_name, decl_loc, _redirect_file_map)
+
+def write_redirects(loc_map, file_map, jobs=1):
+  items = [(decl_name, loc_map[decl_name]) for decl_name in loc_map
+           if not ((decl_name == 'con' or decl_name.startswith('con.'))
+                   and sys.platform == 'win32')]
+  if jobs > 1:
+    from multiprocessing import Pool
+    with Pool(jobs, initializer=_redirect_init, initargs=(file_map,)) as pool:
+      for _ in pool.imap_unordered(_redirect_one, items, chunksize=200):
+        pass
+  else:
+    _redirect_init(file_map)
+    for item in items:
+      _redirect_one(item)
 
 def copy_css_and_js(path, use_symlinks):
   def cp(a, b):
@@ -844,7 +867,7 @@ def main():
   write_import_gexf(file_map)
   write_decl_txt(loc_map)
   write_html_files(file_map, loc_map, notes, mod_docs, instances, instances_for, tactic_docs, bib)
-  write_redirects(loc_map, file_map)
+  write_redirects(loc_map, file_map, jobs=cl_args.jobs)
   copy_css_and_js(html_root, use_symlinks=cl_args.l)
   copy_yaml_bib_files(html_root)
   copy_static_files(html_root)
