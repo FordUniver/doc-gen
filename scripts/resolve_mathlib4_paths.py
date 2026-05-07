@@ -177,6 +177,35 @@ _GENERIC_BASENAMES = frozenset({
 })
 
 
+# Known directory-level renames in mathlib4 history that git's rename
+# detection can't follow because the contained files were also rewritten.
+# Each entry encodes the old → new directory segment; the fallback below
+# tries `path.replace("/<old>/", "/<new>/")` for each. Verified empirically
+# (old dir is empty in master HEAD, new dir is populated).
+_DIRECTORY_ALIASES = {
+    "GroupCat":            "Grp",            # Algebra/Category — 27 files in Grp
+    "AlgebraCat":          "AlgCat",         # Algebra/Category — 4 files in AlgCat
+    "SemiNormedGroupCat":  "SemiNormedGrp",  # Analysis/Normed/Group — 2 files
+    "SlimCheck":           "Plausible",      # Testing — package renamed
+}
+
+
+def alias_fallback(path: str, live: set):
+    """Try the deleted path with each known mathlib4 directory rename
+    substituted in. Returns the first live match or (None, 0).
+    """
+    if not path.endswith(".lean"):
+        return (None, 0)
+    for old, new in _DIRECTORY_ALIASES.items():
+        sep_old = f"/{old}/"
+        sep_new = f"/{new}/"
+        if sep_old in path:
+            candidate = path.replace(sep_old, sep_new, 1)
+            if candidate in live:
+                return (candidate, 1)
+    return (None, 0)
+
+
 def basename_fallback(path: str, live: set):
     """For a deleted X.lean, find a live `*/X.lean` strictly *below* its
     original directory, with the same basename.
@@ -302,8 +331,8 @@ def main():
         http_head = make_url_checker(args.concurrency)
 
     resolved = {}            # module → mathlib4 docs path (no extension)
-    counts = {"verified": 0, "renamed": 0, "split": 0, "moved": 0, "shim": 0,
-              "deleted": 0, "unknown": 0, "unverified_404": 0,
+    counts = {"verified": 0, "renamed": 0, "split": 0, "aliased": 0, "moved": 0,
+              "shim": 0, "deleted": 0, "unknown": 0, "unverified_404": 0,
               "not_ported": 0}
 
     t0 = time.time()
@@ -324,15 +353,20 @@ def main():
                 status = "split"
                 current = parent
             else:
-                moved, _ = basename_fallback(port_path, live)
-                if moved:
-                    status = "moved"
-                    current = moved
+                aliased, _ = alias_fallback(port_path, live)
+                if aliased:
+                    status = "aliased"
+                    current = aliased
+                else:
+                    moved, _ = basename_fallback(port_path, live)
+                    if moved:
+                        status = "moved"
+                        current = moved
 
         # Drop entries whose mathlib4 target is a `deprecated_module`
         # re-export shim — the file exists (HEAD probes 200) but the
         # docs page renders empty.
-        good_statuses = ("verified", "renamed", "split", "moved")
+        good_statuses = ("verified", "renamed", "split", "aliased", "moved")
         if current and status in good_statuses:
             if is_deprecated_shim(cache, current):
                 status = "shim"
