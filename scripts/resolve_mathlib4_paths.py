@@ -18,7 +18,7 @@ Modules with no live mathlib4 successor are omitted; the renderer falls
 back to upstream's self-canonical for those.
 """
 import argparse
-import os
+import re
 import subprocess
 import sys
 import time
@@ -145,34 +145,44 @@ def resolve_path(start: str, renames: dict, live: set, deletes: dict):
     return ("unknown", None, hops)
 
 
-def parent_fallback(path: str, live: set, http_head=None):
+def parent_fallback(path: str, live: set):
     """For a deleted file, find a successor by name-stem in the live tree.
 
-    mathlib4_docs does not serve directory index pages, so walking up to
-    `<dir>/index.html` doesn't help. Instead we look for the common
-    pattern where a file `X.lean` was split into `X/Basic.lean` and
-    `X/Defs.lean` (git rename detection misses this when the new files
-    are <75% similar to the original).
+    Handles only the unambiguous X.lean → X/Basic.lean (or X/Defs.lean)
+    split pattern. Returning a successor in any other case risks pointing
+    at an alphabetically-first but topically-wrong sibling (e.g. picking
+    `Cat.lean` over `Pseudofunctor.lean`); when the heuristic can't
+    decide, leave the entry unmapped so the renderer falls back to
+    upstream's self-canonical.
 
     Returns (live_lean_path, 1) on a match, or (None, 0).
     """
     if not path.endswith(".lean"):
         return (None, 0)
-    stem = path[:-5]  # e.g. "Mathlib/Algebra/AddTorsor"
-    candidates = [p for p in live
-                  if p.startswith(stem + "/") and p.endswith(".lean")]
-    if not candidates:
-        return (None, 0)
+    stem = path[:-5]
+    for tail in ("Basic.lean", "Defs.lean"):
+        candidate = f"{stem}/{tail}"
+        if candidate in live:
+            return (candidate, 1)
+    return (None, 0)
 
-    def rank(p):
-        tail = p[len(stem) + 1:]
-        # Prefer the conventional split targets, then shorter paths.
-        return (0 if tail == "Basic.lean"
-                else 1 if tail == "Defs.lean"
-                else 2,
-                tail.count("/"), tail)
-    candidates.sort(key=rank)
-    return (candidates[0], 1)
+
+_SHIM_RE = re.compile(r"^\s*deprecated_module\b", re.MULTILINE)
+
+def is_deprecated_shim(cache: Path, lean_path: str) -> bool:
+    """Detect mathlib4 re-export shims that render as empty docs pages.
+
+    These files exist in the source tree (so HEAD probes return 200) and
+    git treats them as unrenamed, but their content is just
+    `deprecated_module (since := ...)` and the rendered doc page has no
+    declarations. Pointing canonical at them lands users on a dead page;
+    treat them as deletions instead.
+    """
+    try:
+        text = (cache / lean_path).read_text(errors="replace")
+    except OSError:
+        return False
+    return bool(_SHIM_RE.search(text))
 
 
 def make_url_checker(concurrency):
@@ -251,7 +261,7 @@ def main():
         http_head = make_url_checker(args.concurrency)
 
     resolved = {}            # module → mathlib4 docs path (no extension)
-    counts = {"verified": 0, "renamed": 0, "split": 0,
+    counts = {"verified": 0, "renamed": 0, "split": 0, "shim": 0,
               "deleted": 0, "unknown": 0, "unverified_404": 0,
               "not_ported": 0}
 
@@ -273,13 +283,21 @@ def main():
                 status = "split"
                 current = parent
 
+        # Drop entries whose mathlib4 target is a `deprecated_module`
+        # re-export shim — the file exists (HEAD probes 200) but the
+        # docs page renders empty.
+        if current and status in ("verified", "renamed", "split"):
+            if is_deprecated_shim(cache, current):
+                status = "shim"
+                current = None
+
         if http_head and current and status in ("verified", "renamed", "split"):
             if not http_head(current[:-5] + ".html"):
                 status = "unverified_404"
                 current = None
 
         counts[status] = counts.get(status, 0) + 1
-        if current and current.endswith(".lean") and status != "unverified_404":
+        if current and current.endswith(".lean"):
             resolved[module] = current[:-5]  # drop .lean for the URL stub
     dt = time.time() - t0
     print(f"[resolve] {len(data)} input entries in {dt:.1f}s", file=sys.stderr)
