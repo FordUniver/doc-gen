@@ -2,10 +2,10 @@
 # Source: port_status.yaml at mathlib4 df3e43373ba745d20fa2e8b5c0230a2e27109816.
 # Rename threshold: -M75%.
 algebra.add_torsor:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Algebra/AddTorsor/Basic.lean
   mathlib4_file: Mathlib/Algebra/AddTorsor.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 algebra.algebra.basic:
   current_mathlib4_file: Mathlib/Algebra/Algebra/Basic.lean
@@ -992,10 +992,10 @@ algebra.group.unique_prods:
   resolution_status: renamed
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 algebra.group.units:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Algebra/Group/Units/Basic.lean
   mathlib4_file: Mathlib/Algebra/Group/Units.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 algebra.group.with_one.basic:
   current_mathlib4_file: Mathlib/Algebra/Group/WithOne/Basic.lean
@@ -1532,10 +1532,10 @@ algebra.module.dedekind_domain:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 algebra.module.equiv:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Algebra/Module/Equiv/Basic.lean
   mathlib4_file: Mathlib/Algebra/Module/Equiv.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 algebra.module.graded_module:
   current_mathlib4_file: Mathlib/Algebra/Module/GradedModule.lean
@@ -1784,10 +1784,10 @@ algebra.order.field.power:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 algebra.order.floor:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Algebra/Order/Floor/Defs.lean
   mathlib4_file: Mathlib/Algebra/Order/Floor.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 algebra.order.group.abs:
   current_mathlib4_file: Mathlib/Algebra/Order/Group/Abs.lean
@@ -2498,10 +2498,10 @@ algebraic_geometry.Spec:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 algebraic_geometry.elliptic_curve.point:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/AlgebraicGeometry/EllipticCurve/Affine/Basic.lean
   mathlib4_file: Mathlib/AlgebraicGeometry/EllipticCurve/Affine.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 algebraic_geometry.elliptic_curve.weierstrass:
   current_mathlib4_file: Mathlib/AlgebraicGeometry/EllipticCurve/Weierstrass.lean
@@ -3884,10 +3884,10 @@ analysis.inner_product_space.positive:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 analysis.inner_product_space.projection:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Analysis/InnerProductSpace/Projection/Basic.lean
   mathlib4_file: Mathlib/Analysis/InnerProductSpace/Projection.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 analysis.inner_product_space.rayleigh:
   current_mathlib4_file: Mathlib/Analysis/InnerProductSpace/Rayleigh.lean
@@ -4544,10 +4544,10 @@ analysis.special_functions.gamma.bohr_mollerup:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 analysis.special_functions.gaussian:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Analysis/SpecialFunctions/Gaussian/FourierTransform.lean
   mathlib4_file: Mathlib/Analysis/SpecialFunctions/Gaussian.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 analysis.special_functions.improper_integrals:
   current_mathlib4_file: Mathlib/Analysis/SpecialFunctions/ImproperIntegrals.lean
@@ -5018,10 +5018,10 @@ category_theory.bicategory.free:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 category_theory.bicategory.functor:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/CategoryTheory/Bicategory/Functor/Cat.lean
   mathlib4_file: Mathlib/CategoryTheory/Bicategory/Functor.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 category_theory.bicategory.functor_bicategory:
   current_mathlib4_file: Mathlib/CategoryTheory/Bicategory/FunctorBicategory/Oplax.lean
@@ -5408,10 +5408,10 @@ category_theory.functor.hom:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 category_theory.functor.reflects_isomorphisms:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/CategoryTheory/Functor/ReflectsIso/Basic.lean
   mathlib4_file: Mathlib/CategoryTheory/Functor/ReflectsIso.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 category_theory.generator:
   current_mathlib4_file: Mathlib/CategoryTheory/Generator/Basic.lean
@@ -6038,10 +6038,10 @@ category_theory.limits.small_complete:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 category_theory.limits.types:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/CategoryTheory/Limits/Types/Coequalizers.lean
   mathlib4_file: Mathlib/CategoryTheory/Limits/Types.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 category_theory.limits.unit:
   current_mathlib4_file: Mathlib/CategoryTheory/Limits/Unit.lean
@@ -6386,10 +6386,10 @@ category_theory.monoidal.types.symmetric:
   resolution_status: deleted
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 category_theory.morphism_property:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/CategoryTheory/MorphismProperty/Basic.lean
   mathlib4_file: Mathlib/CategoryTheory/MorphismProperty.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 category_theory.natural_isomorphism:
   current_mathlib4_file: Mathlib/CategoryTheory/NatIso.lean
@@ -8714,10 +8714,10 @@ data.list.palindrome:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.list.perm:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Data/List/Perm/Basic.lean
   mathlib4_file: Mathlib/Data/List/Perm.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.list.permutation:
   current_mathlib4_file: Mathlib/Data/List/Permutation.lean
@@ -9206,10 +9206,10 @@ data.nat.count:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.nat.digits:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Data/Nat/Digits/Defs.lean
   mathlib4_file: Mathlib/Data/Nat/Digits.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.nat.dist:
   current_mathlib4_file: Mathlib/Data/Nat/Dist.lean
@@ -9368,10 +9368,10 @@ data.nat.pow:
   resolution_status: deleted
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.nat.prime:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Data/Nat/Prime/Basic.lean
   mathlib4_file: Mathlib/Data/Nat/Prime.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.nat.prime_fin:
   current_mathlib4_file: Mathlib/Data/Nat/PrimeFin.lean
@@ -10232,10 +10232,10 @@ data.set.equitable:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.set.finite:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Data/Set/Finite/Basic.lean
   mathlib4_file: Mathlib/Data/Set/Finite.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.set.function:
   current_mathlib4_file: Mathlib/Data/Set/Function.lean
@@ -10520,10 +10520,10 @@ data.sigma.order:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.sign:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Data/Sign/Basic.lean
   mathlib4_file: Mathlib/Data/Sign.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.stream.defs:
   current_mathlib4_file: Mathlib/Data/Stream/Defs.lean
@@ -10592,10 +10592,10 @@ data.sym.sym2:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.tree:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Data/Tree/Basic.lean
   mathlib4_file: Mathlib/Data/Tree.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 data.two_pointing:
   current_mathlib4_file: Mathlib/Data/TwoPointing.lean
@@ -10940,10 +10940,10 @@ field_theory.mv_polynomial:
   resolution_status: deleted
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 field_theory.normal:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/FieldTheory/Normal/Basic.lean
   mathlib4_file: Mathlib/FieldTheory/Normal.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 field_theory.perfect_closure:
   current_mathlib4_file: Mathlib/FieldTheory/PerfectClosure.lean
@@ -10964,10 +10964,10 @@ field_theory.primitive_element:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 field_theory.ratfunc:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/FieldTheory/RatFunc/Basic.lean
   mathlib4_file: Mathlib/FieldTheory/RatFunc.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 field_theory.separable:
   current_mathlib4_file: Mathlib/FieldTheory/Separable.lean
@@ -11300,10 +11300,10 @@ girard:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 group_theory.abelianization:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/GroupTheory/Abelianization/Defs.lean
   mathlib4_file: Mathlib/GroupTheory/Abelianization.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 group_theory.archimedean:
   current_mathlib4_file: Mathlib/GroupTheory/Archimedean.lean
@@ -12146,10 +12146,10 @@ linear_algebra.affine_space.affine_map:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.affine_space.affine_subspace:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/LinearAlgebra/AffineSpace/AffineSubspace/Basic.lean
   mathlib4_file: Mathlib/LinearAlgebra/AffineSpace/AffineSubspace.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.affine_space.basic:
   current_mathlib4_file: Mathlib/LinearAlgebra/AffineSpace/Defs.lean
@@ -12386,10 +12386,10 @@ linear_algebra.direct_sum.tensor_product:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.dual:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/LinearAlgebra/Dual/Defs.lean
   mathlib4_file: Mathlib/LinearAlgebra/Dual.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.eigenspace.basic:
   current_mathlib4_file: Mathlib/LinearAlgebra/Eigenspace/Basic.lean
@@ -12440,10 +12440,10 @@ linear_algebra.finrank:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.finsupp:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/LinearAlgebra/Finsupp/Defs.lean
   mathlib4_file: Mathlib/LinearAlgebra/Finsupp.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.finsupp_vector_space:
   current_mathlib4_file: Mathlib/LinearAlgebra/Finsupp/VectorSpace.lean
@@ -12530,10 +12530,10 @@ linear_algebra.lagrange:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.linear_independent:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/LinearAlgebra/LinearIndependent/Basic.lean
   mathlib4_file: Mathlib/LinearAlgebra/LinearIndependent.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.linear_pmap:
   current_mathlib4_file: Mathlib/LinearAlgebra/LinearPMap.lean
@@ -12884,10 +12884,10 @@ linear_algebra.quadratic_form.real:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.quotient:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/LinearAlgebra/Quotient/Basic.lean
   mathlib4_file: Mathlib/LinearAlgebra/Quotient.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.quotient_pi:
   current_mathlib4_file: Mathlib/LinearAlgebra/Quotient/Pi.lean
@@ -12902,10 +12902,10 @@ linear_algebra.ray:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.sesquilinear_form:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/LinearAlgebra/SesquilinearForm/Basic.lean
   mathlib4_file: Mathlib/LinearAlgebra/SesquilinearForm.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.smodeq:
   current_mathlib4_file: Mathlib/LinearAlgebra/SModEq.lean
@@ -12914,10 +12914,10 @@ linear_algebra.smodeq:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.span:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/LinearAlgebra/Span/Basic.lean
   mathlib4_file: Mathlib/LinearAlgebra/Span.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 linear_algebra.std_basis:
   current_mathlib4_file: Mathlib/LinearAlgebra/StdBasis.lean
@@ -13442,10 +13442,10 @@ measure_theory.function.jacobian:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 measure_theory.function.l1_space:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/MeasureTheory/Function/L1Space/AEEqFun.lean
   mathlib4_file: Mathlib/MeasureTheory/Function/L1Space.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 measure_theory.function.l2_space:
   current_mathlib4_file: Mathlib/MeasureTheory/Function/L2Space.lean
@@ -14606,10 +14606,10 @@ order.bounded:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 order.bounded_order:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Order/BoundedOrder/Basic.lean
   mathlib4_file: Mathlib/Order/BoundedOrder.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 order.bounds.basic:
   current_mathlib4_file: Mathlib/Order/Bounds/Basic.lean
@@ -14768,10 +14768,10 @@ order.complete_boolean_algebra:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 order.complete_lattice:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Order/CompleteLattice/Basic.lean
   mathlib4_file: Mathlib/Order/CompleteLattice.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 order.complete_lattice_intervals:
   current_mathlib4_file: Mathlib/Order/CompleteLatticeIntervals.lean
@@ -14858,10 +14858,10 @@ order.filter.archimedean:
   resolution_status: renamed
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 order.filter.at_top_bot:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Order/Filter/AtTopBot/Basic.lean
   mathlib4_file: Mathlib/Order/Filter/AtTopBot.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 order.filter.bases:
   current_mathlib4_file: Mathlib/Order/Filter/Bases/Basic.lean
@@ -14996,10 +14996,10 @@ order.fixed_points:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 order.galois_connection:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Order/GaloisConnection/Basic.lean
   mathlib4_file: Mathlib/Order/GaloisConnection.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 order.game_add:
   current_mathlib4_file: Mathlib/Order/GameAdd.lean
@@ -15446,10 +15446,10 @@ probability.kernel.basic:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 probability.kernel.composition:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Probability/Kernel/Composition/AbsolutelyContinuous.lean
   mathlib4_file: Mathlib/Probability/Kernel/Composition.lean
   rename_chain_length: 1
-  resolution_status: deleted
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 probability.kernel.cond_cdf:
   current_mathlib4_file: null
@@ -15470,10 +15470,10 @@ probability.kernel.condexp:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 probability.kernel.disintegration:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Probability/Kernel/Disintegration/Basic.lean
   mathlib4_file: Mathlib/Probability/Kernel/Disintegration.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 probability.kernel.integral_comp_prod:
   current_mathlib4_file: Mathlib/Probability/Kernel/Composition/IntegralCompProd.lean
@@ -15626,10 +15626,10 @@ representation_theory.Action:
   resolution_status: renamed
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 representation_theory.Rep:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RepresentationTheory/Rep/Basic.lean
   mathlib4_file: Mathlib/RepresentationTheory/Rep.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 representation_theory.basic:
   current_mathlib4_file: Mathlib/RepresentationTheory/Basic.lean
@@ -15716,16 +15716,16 @@ ring_theory.algebra_tower:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.algebraic:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/Algebraic/Basic.lean
   mathlib4_file: Mathlib/RingTheory/Algebraic.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.algebraic_independent:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/AlgebraicIndependent/Basic.lean
   mathlib4_file: Mathlib/RingTheory/AlgebraicIndependent.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.artinian:
   current_mathlib4_file: Mathlib/RingTheory/Artinian/Module.lean
@@ -15818,10 +15818,10 @@ ring_theory.dedekind_domain.finite_adele_ring:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.dedekind_domain.ideal:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/DedekindDomain/Ideal/Basic.lean
   mathlib4_file: Mathlib/RingTheory/DedekindDomain/Ideal.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.dedekind_domain.integral_closure:
   current_mathlib4_file: Mathlib/RingTheory/DedekindDomain/IntegralClosure.lean
@@ -15884,10 +15884,10 @@ ring_theory.eisenstein_criterion:
   resolution_status: deleted
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.etale:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/Etale/Basic.lean
   mathlib4_file: Mathlib/RingTheory/Etale.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.euclidean_domain:
   current_mathlib4_file: Mathlib/RingTheory/EuclideanDomain.lean
@@ -15914,10 +15914,10 @@ ring_theory.finite_type:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.finiteness:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/Finiteness/Basic.lean
   mathlib4_file: Mathlib/RingTheory/Finiteness.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.fintype:
   current_mathlib4_file: Mathlib/RingTheory/Fintype.lean
@@ -15986,10 +15986,10 @@ ring_theory.henselian:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.ideal.associated_prime:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/Ideal/AssociatedPrime/Basic.lean
   mathlib4_file: Mathlib/RingTheory/Ideal/AssociatedPrime.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.ideal.basic:
   current_mathlib4_file: Mathlib/RingTheory/Ideal/Basic.lean
@@ -16016,16 +16016,16 @@ ring_theory.ideal.local_ring:
   resolution_status: deleted
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.ideal.minimal_prime:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/Ideal/MinimalPrime/Basic.lean
   mathlib4_file: Mathlib/RingTheory/Ideal/MinimalPrime.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.ideal.norm:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/Ideal/Norm/AbsNorm.lean
   mathlib4_file: Mathlib/RingTheory/Ideal/Norm.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.ideal.operations:
   current_mathlib4_file: Mathlib/RingTheory/Ideal/Operations.lean
@@ -16046,10 +16046,10 @@ ring_theory.ideal.prod:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.ideal.quotient:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/Ideal/Quotient/Basic.lean
   mathlib4_file: Mathlib/RingTheory/Ideal/Quotient.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.ideal.quotient_operations:
   current_mathlib4_file: Mathlib/RingTheory/Ideal/Quotient/Operations.lean
@@ -16118,10 +16118,10 @@ ring_theory.laurent_series:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.local_properties:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/LocalProperties/Basic.lean
   mathlib4_file: Mathlib/RingTheory/LocalProperties.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.localization.as_subring:
   current_mathlib4_file: Mathlib/RingTheory/Localization/AsSubring.lean
@@ -16274,10 +16274,10 @@ ring_theory.nakayama:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.nilpotent:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/Nilpotent/Basic.lean
   mathlib4_file: Mathlib/RingTheory/Nilpotent.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.noetherian:
   current_mathlib4_file: Mathlib/RingTheory/Noetherian/Defs.lean
@@ -16610,10 +16610,10 @@ ring_theory.trace:
   resolution_status: renamed
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.unique_factorization_domain:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/RingTheory/UniqueFactorizationDomain/Basic.lean
   mathlib4_file: Mathlib/RingTheory/UniqueFactorizationDomain.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 ring_theory.valuation.basic:
   current_mathlib4_file: Mathlib/RingTheory/Valuation/Basic.lean
@@ -17762,10 +17762,10 @@ topology.hom.open:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 topology.homeomorph:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Topology/Homeomorph/Defs.lean
   mathlib4_file: Mathlib/Topology/Homeomorph.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 topology.homotopy.H_spaces:
   current_mathlib4_file: Mathlib/Topology/Homotopy/HSpaces.lean
@@ -17888,10 +17888,10 @@ topology.instances.rat_lemmas:
   resolution_status: verified
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 topology.instances.real:
-  current_mathlib4_file: null
+  current_mathlib4_file: Mathlib/Topology/Instances/Real/Lemmas.lean
   mathlib4_file: Mathlib/Topology/Instances/Real.lean
-  rename_chain_length: 0
-  resolution_status: deleted
+  rename_chain_length: 1
+  resolution_status: deleted_to_parent
   resolved_at_commit: df3e43373ba745d20fa2e8b5c0230a2e27109816
 topology.instances.real_vector_space:
   current_mathlib4_file: Mathlib/Topology/Instances/RealVectorSpace.lean

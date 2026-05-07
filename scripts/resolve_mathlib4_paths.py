@@ -151,27 +151,34 @@ def resolve_path(start: str, renames: dict, live: set, deletes: dict):
     return ("unknown", None, hops)
 
 
-def parent_fallback(path: str, live: set, http_head):
-    """For a deleted file, walk up directories looking for a live index page.
+def parent_fallback(path: str, live: set, http_head=None):
+    """For a deleted file, find a successor by name-stem in the live tree.
 
-    Returns (current_path_to_index_html_source, hops) or (None, 0).
+    mathlib4_docs does not serve directory index pages, so walking up to
+    `<dir>/index.html` doesn't help. Instead we look for the common
+    pattern where a file `X.lean` was split into `X/Basic.lean` and
+    `X/Defs.lean` (git rename detection misses this when the new files
+    are <75% similar to the original).
+
+    Returns (live_lean_path, 1) on a match, or (None, 0).
     """
-    parts = path.split("/")
-    if parts[-1].endswith(".lean"):
-        parts = parts[:-1]
-    while parts:
-        # mathlib4_docs serves directory pages at <dir>/index.html, but the
-        # corresponding source path doesn't exist as a .lean file. We probe
-        # the URL directly in the verify pass; this just produces the
-        # candidate index source path so verify_url can check it.
-        candidate_url_path = "/".join(parts) + "/index.html"
-        if http_head and http_head(candidate_url_path):
-            # Reverse-engineer a "source path" representation. We use the
-            # directory itself as the current_mathlib4_file (without the
-            # trailing /index.html); the renderer will append .html.
-            return ("/".join(parts), len(path.split("/")) - len(parts))
-        parts = parts[:-1]
-    return (None, 0)
+    if not path.endswith(".lean"):
+        return (None, 0)
+    stem = path[:-5]  # e.g. "Mathlib/Algebra/AddTorsor"
+    candidates = [p for p in live
+                  if p.startswith(stem + "/") and p.endswith(".lean")]
+    if not candidates:
+        return (None, 0)
+
+    def rank(p):
+        tail = p[len(stem) + 1:]
+        # Prefer the conventional split targets, then shorter paths.
+        return (0 if tail == "Basic.lean"
+                else 1 if tail == "Defs.lean"
+                else 2,
+                tail.count("/"), tail)
+    candidates.sort(key=rank)
+    return (candidates[0], 1)
 
 
 def make_url_checker(concurrency):
@@ -194,8 +201,14 @@ def make_url_checker(concurrency):
                 return False
         return check
 
-    client = httpx.Client(http2=True, timeout=10.0,
-                          limits=httpx.Limits(max_connections=concurrency))
+    # GitHub Pages serves HTTP/2 if available; fall back to HTTP/1.1 if
+    # the optional `h2` package isn't installed.
+    try:
+        client = httpx.Client(http2=True, timeout=10.0,
+                              limits=httpx.Limits(max_connections=concurrency))
+    except ImportError:
+        client = httpx.Client(timeout=10.0,
+                              limits=httpx.Limits(max_connections=concurrency))
 
     def check(path):
         try:
@@ -250,11 +263,11 @@ def main():
             continue
         status, current, hops = resolve_path(port_path, renames, live, deletes)
 
-        if status == "deleted" and not args.no_parent_fallback and http_head:
-            parent, parent_hops = parent_fallback(port_path, live, http_head)
+        if status == "deleted" and not args.no_parent_fallback:
+            parent, parent_hops = parent_fallback(port_path, live)
             if parent:
                 status = "deleted_to_parent"
-                current = parent  # directory path, no .lean suffix
+                current = parent  # live .lean path (e.g. <stem>/Basic.lean)
                 hops = parent_hops
 
         # Verification: HEAD probe for verified/renamed.

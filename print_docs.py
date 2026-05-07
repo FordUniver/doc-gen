@@ -311,10 +311,9 @@ def _load_port_map(port_yaml, resolved_yaml=None):
       # to noindex these in a follow-up.)
       continue
 
-    if status == 'deleted_to_parent':
-      # `current` is a directory path (no .lean); URL ends in /index.html
-      canonical[module] = MATHLIB4_DOCS_ROOT + current + '/index.html'
-    elif current.endswith('.lean'):
+    if current.endswith('.lean'):
+      # current is a live mathlib4 .lean path (verified, renamed, or a
+      # deleted_to_parent stem-match like X.lean -> X/Basic.lean)
       canonical[module] = MATHLIB4_DOCS_ROOT + current[:-len('.lean')] + '.html'
   return canonical, noindex
 
