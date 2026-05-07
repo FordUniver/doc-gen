@@ -12,9 +12,6 @@
     {% if canonical_url is not none %}
     <link rel="canonical" href="{{ canonical_url }}" />
     {% endif %}
-    {% if noindex|default(false) %}
-    <meta name="robots" content="noindex,follow">
-    {% endif %}
     <meta property="og:title" content="{{ self.title() }} - mathlib3 docs">
     <meta property="og:site_name" content="mathlib for Lean 3 - API documentation">
     <meta property="og:description" content="{{ self.metadesc() }}">

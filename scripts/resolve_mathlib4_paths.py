@@ -1,28 +1,21 @@
 #!/usr/bin/env python3
-"""Resolve port-status mathlib4 paths to current mathlib4 HEAD paths.
+"""Generate `mathlib4_canonical_map.yaml` for doc-gen's get_canonical_url.
 
-Reads `port_status.yaml` (mathlib3 → mathlib4 paths at port time) and
-walks mathlib4's git rename history forward to find each entry's
-current path on master HEAD.
+Fetches the mathlib4-port-status YAML from the leanprover-community wiki,
+walks each port-time mathlib4 path forward through mathlib4's git rename
+history to its current master HEAD location (with an extra stem-match for
+the X.lean → X/Basic.lean split pattern git misses), and writes a flat
+`mathlib3_module: mathlib4/relative/path` map (no extension) for entries
+that resolved to a live, web-reachable docs page.
 
-Output: `port_status_resolved.yaml` (sidecar). Schema per entry:
+Schema (flat, one entry per line):
 
-    algebra.group.basic:
-      mathlib4_file: Mathlib/Algebra/Group/Basic.lean        # carried over
-      current_mathlib4_file: Mathlib/Algebra/Group/Basic.lean
-      resolution_status: verified
-      rename_chain_length: 0
-      resolved_at_commit: <mathlib4 master HEAD sha>
+    algebra.add_torsor: Mathlib/Algebra/AddTorsor/Basic
+    algebra.algebra.basic: Mathlib/Algebra/Algebra/Basic
+    ...
 
-Statuses:
-    verified           — port-time path still exists on master HEAD
-    renamed            — followed rename chain to a live path
-    deleted_to_parent  — file deleted; canonical falls back to the
-                         closest parent directory that has a docs page
-    deleted            — file deleted, no parent fallback (only when
-                         --no-verify or --no-parent-fallback)
-    unknown            — port-time path never appears in history
-    unverified_404     — resolved path returned 404 from mathlib4_docs
+Modules with no live mathlib4 successor are omitted; the renderer falls
+back to upstream's self-canonical for those.
 """
 import argparse
 import os
@@ -40,10 +33,11 @@ DEFAULT_CACHE = Path.home() / ".cache" / "doc-gen" / "mathlib4-history"
 
 def parse_args():
     p = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
-    p.add_argument("--port-status", default="port_status.yaml",
-                   help="input wiki-mirrored YAML (default: port_status.yaml)")
-    p.add_argument("--out", default="port_status_resolved.yaml",
-                   help="output sidecar YAML (default: port_status_resolved.yaml)")
+    p.add_argument("--port-status", default=None,
+                   help="local mathlib4-port-status YAML; default fetches from "
+                        "the leanprover-community wiki")
+    p.add_argument("--out", default="mathlib4_canonical_map.yaml",
+                   help="output flat YAML (default: mathlib4_canonical_map.yaml)")
     p.add_argument("--cache", default=str(DEFAULT_CACHE),
                    help=f"mathlib4 clone cache (default: {DEFAULT_CACHE})")
     p.add_argument("--rename-threshold", default="75",
@@ -219,19 +213,29 @@ def make_url_checker(concurrency):
     return check
 
 
-def main():
-    args = parse_args()
-    here = Path.cwd()
-    port_status_path = here / args.port_status
+PORT_STATUS_WIKI = ("https://raw.githubusercontent.com/wiki/leanprover-community/"
+                    "mathlib/mathlib4-port-status-yaml.md")
 
-    print(f"[load] {port_status_path}", file=sys.stderr)
-    text = port_status_path.read_text()
+
+def load_port_status(local_path):
+    """Return the port-status YAML data, fetching from the wiki if needed."""
+    if local_path is None:
+        from urllib.request import urlopen
+        print(f"[fetch] {PORT_STATUS_WIKI}", file=sys.stderr)
+        text = urlopen(PORT_STATUS_WIKI, timeout=30).read().decode()
+    else:
+        text = Path(local_path).read_text()
     if "```" in text:
-        # wiki page wraps the YAML in a markdown fence
+        # wiki page wraps the YAML payload in a markdown fence
         parts = text.split("```")
         if len(parts) >= 3:
             text = parts[1]
-    data = yaml.safe_load(text) or {}
+    return yaml.safe_load(text) or {}
+
+
+def main():
+    args = parse_args()
+    data = load_port_status(args.port_status)
     print(f"[load] {len(data)} entries", file=sys.stderr)
 
     cache = ensure_clone(Path(args.cache).expanduser(), fetch=not args.no_fetch)
@@ -246,8 +250,8 @@ def main():
     if not args.no_verify:
         http_head = make_url_checker(args.concurrency)
 
-    resolved = {}
-    counts = {"verified": 0, "renamed": 0, "deleted_to_parent": 0,
+    resolved = {}            # module → mathlib4 docs path (no extension)
+    counts = {"verified": 0, "renamed": 0, "split": 0,
               "deleted": 0, "unknown": 0, "unverified_404": 0,
               "not_ported": 0}
 
@@ -261,39 +265,34 @@ def main():
         port_path = entry.get("mathlib4_file")
         if not port_path or not port_path.endswith(".lean"):
             continue
-        status, current, hops = resolve_path(port_path, renames, live, deletes)
+        status, current, _ = resolve_path(port_path, renames, live, deletes)
 
         if status == "deleted" and not args.no_parent_fallback:
-            parent, parent_hops = parent_fallback(port_path, live)
+            parent, _ = parent_fallback(port_path, live)
             if parent:
-                status = "deleted_to_parent"
-                current = parent  # live .lean path (e.g. <stem>/Basic.lean)
-                hops = parent_hops
+                status = "split"
+                current = parent
 
-        # Verification: HEAD probe for verified/renamed.
-        if http_head and current and status in ("verified", "renamed"):
-            url_path = current[:-5] + ".html"  # drop .lean
-            if not http_head(url_path):
+        if http_head and current and status in ("verified", "renamed", "split"):
+            if not http_head(current[:-5] + ".html"):
                 status = "unverified_404"
+                current = None
 
         counts[status] = counts.get(status, 0) + 1
-        resolved[module] = {
-            "mathlib4_file": port_path,
-            "current_mathlib4_file": current,
-            "resolution_status": status,
-            "rename_chain_length": hops,
-            "resolved_at_commit": head_sha,
-        }
+        if current and current.endswith(".lean") and status != "unverified_404":
+            resolved[module] = current[:-5]  # drop .lean for the URL stub
     dt = time.time() - t0
-    print(f"[resolve] {len(resolved)} entries in {dt:.1f}s", file=sys.stderr)
+    print(f"[resolve] {len(data)} input entries in {dt:.1f}s", file=sys.stderr)
     for k, v in counts.items():
         print(f"  {k}: {v}", file=sys.stderr)
+    print(f"[resolve] mapped: {len(resolved)}", file=sys.stderr)
 
-    out_path = here / args.out
+    out_path = Path(args.out)
     with out_path.open("w") as f:
-        f.write("# Generated by scripts/resolve_mathlib4_paths.py.\n")
-        f.write(f"# Source: port_status.yaml at mathlib4 {head_sha}.\n")
-        f.write(f"# Rename threshold: -M{args.rename_threshold}%.\n")
+        f.write("# Generated by scripts/resolve_mathlib4_paths.py — do not edit.\n")
+        f.write(f"# Source: mathlib4-port-status wiki, mathlib4 master @ {head_sha}.\n")
+        f.write(f"# Rename threshold: -M{args.rename_threshold}%. "
+                f"Coverage: {len(resolved)}/{counts['verified'] + counts['renamed'] + counts['split'] + counts['deleted'] + counts['unknown'] + counts['unverified_404']} ported modules.\n")
         yaml.safe_dump(resolved, f, sort_keys=True, default_flow_style=False)
     print(f"[write] {out_path}", file=sys.stderr)
 
