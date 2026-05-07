@@ -221,6 +221,28 @@ _PATH_ALIASES = {
         "Mathlib/FieldTheory/IntermediateField/Adjoin/Basic.lean",
 }
 
+# Manual overrides for wiki port-status entries where the recorded
+# `mathlib4_file` is still live but the bulk of the original content has
+# since migrated into a sibling Basic/Defs file in the same parent
+# directory. Picked by an offline overlap scan (audit_canonical_map.py
+# discovered each proposal scoring ≥3× the wiki target on declaration-
+# name match, with the swap staying inside the same parent directory).
+_OVERRIDES = {
+    "linear_algebra.alternating":             "Mathlib/LinearAlgebra/Alternating/Basic.lean",
+    "set_theory.cardinal.basic":              "Mathlib/SetTheory/Cardinal/Basic.lean",
+    "ring_theory.power_series.basic":         "Mathlib/RingTheory/PowerSeries/Basic.lean",
+    "linear_algebra.basis":                   "Mathlib/LinearAlgebra/Basis/Defs.lean",
+    "algebra.module.submodule.basic":         "Mathlib/Algebra/Module/Submodule/Defs.lean",
+    "algebra.order.nonneg.ring":              "Mathlib/Algebra/Order/Nonneg/Basic.lean",
+    "data.rat.nnrat":                         "Mathlib/Data/NNRat/Defs.lean",
+    "analysis.calculus.cont_diff":            "Mathlib/Analysis/Calculus/ContDiff/Basic.lean",
+    "measure_theory.function.lp_seminorm":    "Mathlib/MeasureTheory/Function/LpSeminorm/Basic.lean",
+    "algebra.group_with_zero.inj_surj":       "Mathlib/Algebra/GroupWithZero/Defs.lean",
+    "analysis.convex.cone.basic":             "Mathlib/Analysis/Convex/Cone/Basic.lean",
+    "algebra.star.prod":                      "Mathlib/Algebra/Star/Basic.lean",
+    "topology.metric_space.metrizable":       "Mathlib/Topology/Metrizable/Basic.lean",
+}
+
 
 def alias_fallback(path: str, live: set):
     """Try rewriting `path` under each known mathlib4 rename. Returns the
@@ -383,6 +405,8 @@ def main():
         port_path = entry.get("mathlib4_file")
         if not port_path or not port_path.endswith(".lean"):
             continue
+        if module in _OVERRIDES and _OVERRIDES[module] in live:
+            port_path = _OVERRIDES[module]
         status, current, _ = resolve_path(port_path, renames, live, deletes)
 
         if status == "deleted" and not args.no_parent_fallback:

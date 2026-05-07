@@ -167,7 +167,7 @@ algebra.group_with_zero.basic: Mathlib/Algebra/GroupWithZero/Basic
 algebra.group_with_zero.commute: Mathlib/Algebra/GroupWithZero/Commute
 algebra.group_with_zero.defs: Mathlib/Algebra/GroupWithZero/NeZero
 algebra.group_with_zero.divisibility: Mathlib/Algebra/GroupWithZero/Divisibility
-algebra.group_with_zero.inj_surj: Mathlib/Algebra/GroupWithZero/InjSurj
+algebra.group_with_zero.inj_surj: Mathlib/Algebra/GroupWithZero/Defs
 algebra.group_with_zero.semiconj: Mathlib/Algebra/GroupWithZero/Semiconj
 algebra.group_with_zero.units.basic: Mathlib/Algebra/GroupWithZero/Units/Basic
 algebra.group_with_zero.units.lemmas: Mathlib/Algebra/GroupWithZero/Units/Lemmas
@@ -245,7 +245,7 @@ algebra.module.pid: Mathlib/Algebra/Module/PID
 algebra.module.pointwise_pi: Mathlib/Algebra/Module/PointwisePi
 algebra.module.prod: Mathlib/Algebra/Module/Prod
 algebra.module.projective: Mathlib/Algebra/Module/Projective
-algebra.module.submodule.basic: Mathlib/Algebra/Module/Submodule/LinearMap
+algebra.module.submodule.basic: Mathlib/Algebra/Module/Submodule/Defs
 algebra.module.submodule.bilinear: Mathlib/Algebra/Module/Submodule/Bilinear
 algebra.module.submodule.lattice: Mathlib/Algebra/Module/Submodule/Lattice
 algebra.module.submodule.pointwise: Mathlib/Algebra/Module/Submodule/Pointwise
@@ -300,7 +300,7 @@ algebra.order.monoid.units: Mathlib/Algebra/Order/Monoid/Units
 algebra.order.monoid.with_top: Mathlib/Algebra/Order/Monoid/WithTop
 algebra.order.nonneg.field: Mathlib/Algebra/Order/Nonneg/Field
 algebra.order.nonneg.floor: Mathlib/Algebra/Order/Nonneg/Floor
-algebra.order.nonneg.ring: Mathlib/Algebra/Order/Nonneg/Ring
+algebra.order.nonneg.ring: Mathlib/Algebra/Order/Nonneg/Basic
 algebra.order.pi: Mathlib/Algebra/Order/Pi
 algebra.order.positive.field: Mathlib/Algebra/Order/Positive/Field
 algebra.order.positive.ring: Mathlib/Algebra/Order/Positive/Ring
@@ -359,7 +359,7 @@ algebra.star.module: Mathlib/Algebra/Star/Module
 algebra.star.order: Mathlib/Algebra/Order/Star/Basic
 algebra.star.pi: Mathlib/Algebra/Star/Pi
 algebra.star.pointwise: Mathlib/Algebra/Star/Pointwise
-algebra.star.prod: Mathlib/Algebra/Star/Prod
+algebra.star.prod: Mathlib/Algebra/Star/Basic
 algebra.star.self_adjoint: Mathlib/Algebra/Star/SelfAdjoint
 algebra.star.star_alg_hom: Mathlib/Algebra/Star/StarAlgHom
 algebra.star.subalgebra: Mathlib/Algebra/Star/Subalgebra
@@ -473,7 +473,7 @@ analysis.calculus.bump_function_findim: Mathlib/Analysis/Calculus/BumpFunction/F
 analysis.calculus.bump_function_inner: Mathlib/Analysis/SpecialFunctions/SmoothTransition
 analysis.calculus.conformal.inner_product: Mathlib/Analysis/Calculus/Conformal/InnerProduct
 analysis.calculus.conformal.normed_space: Mathlib/Analysis/Calculus/Conformal/NormedSpace
-analysis.calculus.cont_diff: Mathlib/Analysis/Calculus/ContDiff/Bounds
+analysis.calculus.cont_diff: Mathlib/Analysis/Calculus/ContDiff/Basic
 analysis.calculus.cont_diff_def: Mathlib/Analysis/Calculus/ContDiff/Defs
 analysis.calculus.darboux: Mathlib/Analysis/Calculus/Darboux
 analysis.calculus.deriv.add: Mathlib/Analysis/Calculus/Deriv/Add
@@ -549,7 +549,7 @@ analysis.convex.between: Mathlib/Analysis/Convex/Between
 analysis.convex.body: Mathlib/Analysis/Convex/Body
 analysis.convex.caratheodory: Mathlib/Analysis/Convex/Caratheodory
 analysis.convex.combination: Mathlib/Analysis/Convex/Combination
-analysis.convex.cone.basic: Mathlib/Analysis/Convex/Cone/Extension
+analysis.convex.cone.basic: Mathlib/Analysis/Convex/Cone/Basic
 analysis.convex.cone.dual: Mathlib/Analysis/Convex/Cone/InnerDual
 analysis.convex.contractible: Mathlib/Analysis/Convex/Contractible
 analysis.convex.exposed: Mathlib/Analysis/Convex/Exposed
@@ -1534,7 +1534,7 @@ data.rat.encodable: Mathlib/Data/Rat/Encodable
 data.rat.floor: Mathlib/Data/Rat/Floor
 data.rat.init: Mathlib/Data/Rat/Init
 data.rat.lemmas: Mathlib/Data/Rat/Lemmas
-data.rat.nnrat: Mathlib/Data/NNRat/Lemmas
+data.rat.nnrat: Mathlib/Data/NNRat/Defs
 data.rat.order: Mathlib/Algebra/Order/Ring/Rat
 data.rat.sqrt: Mathlib/Data/Rat/Sqrt
 data.rat.star: Mathlib/Data/Rat/Star
@@ -1876,9 +1876,9 @@ linear_algebra.affine_space.ordered: Mathlib/LinearAlgebra/AffineSpace/Ordered
 linear_algebra.affine_space.pointwise: Mathlib/LinearAlgebra/AffineSpace/Pointwise
 linear_algebra.affine_space.restrict: Mathlib/LinearAlgebra/AffineSpace/Restrict
 linear_algebra.affine_space.slope: Mathlib/LinearAlgebra/AffineSpace/Slope
-linear_algebra.alternating: Mathlib/LinearAlgebra/Alternating/DomCoprod
+linear_algebra.alternating: Mathlib/LinearAlgebra/Alternating/Basic
 linear_algebra.annihilating_polynomial: Mathlib/LinearAlgebra/AnnihilatingPolynomial
-linear_algebra.basis: Mathlib/LinearAlgebra/Basis/VectorSpace
+linear_algebra.basis: Mathlib/LinearAlgebra/Basis/Defs
 linear_algebra.basis.bilinear: Mathlib/LinearAlgebra/Basis/Bilinear
 linear_algebra.bilinear_form: Mathlib/LinearAlgebra/BilinearForm/Basic
 linear_algebra.bilinear_form.tensor_product: Mathlib/LinearAlgebra/BilinearForm/TensorProduct
@@ -2074,7 +2074,7 @@ measure_theory.function.jacobian: Mathlib/MeasureTheory/Function/Jacobian
 measure_theory.function.l2_space: Mathlib/MeasureTheory/Function/L2Space
 measure_theory.function.locally_integrable: Mathlib/MeasureTheory/Function/LocallyIntegrable
 measure_theory.function.lp_order: Mathlib/MeasureTheory/Function/LpOrder
-measure_theory.function.lp_seminorm: Mathlib/MeasureTheory/Function/LpSeminorm/Trim
+measure_theory.function.lp_seminorm: Mathlib/MeasureTheory/Function/LpSeminorm/Basic
 measure_theory.function.lp_space: Mathlib/MeasureTheory/Function/LpSpace/Basic
 measure_theory.function.simple_func: Mathlib/MeasureTheory/Function/SimpleFunc
 measure_theory.function.simple_func_dense: Mathlib/MeasureTheory/Function/SimpleFuncDense
@@ -2558,7 +2558,7 @@ ring_theory.polynomial.tower: Mathlib/RingTheory/Polynomial/Tower
 ring_theory.polynomial.vieta: Mathlib/RingTheory/Polynomial/Vieta
 ring_theory.polynomial_algebra: Mathlib/RingTheory/PolynomialAlgebra
 ring_theory.power_basis: Mathlib/RingTheory/PowerBasis
-ring_theory.power_series.basic: Mathlib/RingTheory/PowerSeries/Order
+ring_theory.power_series.basic: Mathlib/RingTheory/PowerSeries/Basic
 ring_theory.power_series.well_known: Mathlib/RingTheory/PowerSeries/WellKnown
 ring_theory.prime: Mathlib/RingTheory/Prime
 ring_theory.principal_ideal_domain: Mathlib/RingTheory/PrincipalIdealDomain
@@ -2611,7 +2611,7 @@ ring_theory.witt_vector.witt_polynomial: Mathlib/RingTheory/WittVector/WittPolyn
 ring_theory.zmod: Mathlib/RingTheory/ZMod
 seminorm_lattice_not_distrib: Counterexamples/SeminormLatticeNotDistrib
 sensitivity: Archive/Sensitivity
-set_theory.cardinal.basic: Mathlib/SetTheory/Cardinal/ToNat
+set_theory.cardinal.basic: Mathlib/SetTheory/Cardinal/Basic
 set_theory.cardinal.cofinality: Mathlib/SetTheory/Cardinal/Cofinality
 set_theory.cardinal.continuum: Mathlib/SetTheory/Cardinal/Continuum
 set_theory.cardinal.divisibility: Mathlib/SetTheory/Cardinal/Divisibility
@@ -2815,7 +2815,7 @@ topology.metric_space.isometry: Mathlib/Topology/MetricSpace/Isometry
 topology.metric_space.kuratowski: Mathlib/Topology/MetricSpace/Kuratowski
 topology.metric_space.lipschitz: Mathlib/Topology/MetricSpace/Lipschitz
 topology.metric_space.metric_separated: Mathlib/Topology/MetricSpace/MetricSeparated
-topology.metric_space.metrizable: Mathlib/Topology/Metrizable/Urysohn
+topology.metric_space.metrizable: Mathlib/Topology/Metrizable/Basic
 topology.metric_space.metrizable_uniformity: Mathlib/Topology/Metrizable/Uniformity
 topology.metric_space.partition_of_unity: Mathlib/Topology/MetricSpace/PartitionOfUnity
 topology.metric_space.pi_nat: Mathlib/Topology/MetricSpace/PiNat
